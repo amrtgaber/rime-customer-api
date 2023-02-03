@@ -1,0 +1,25 @@
+version: '4.10'
+services:
+  dev-db:
+    env_file: .env
+    image: postgres:latest
+    ports:
+      - 5436:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    networks:
+      - appnetwork
+  test-db:
+    image: postgres:latest
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
