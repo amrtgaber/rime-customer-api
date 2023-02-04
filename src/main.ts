@@ -19,7 +19,7 @@ async function bootstrap() {
 
   configureSwagger(app);
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 4100);
 }
 
 bootstrap();
@@ -33,5 +33,5 @@ function configureSwagger(app: INestApplication) {
 
   const swaggerDoc = SwaggerModule.createDocument(app, swaggerConfig);
 
-  SwaggerModule.setup('/docs', app, swaggerDoc);
+  SwaggerModule.setup('/api/docs', app, swaggerDoc);
 }
