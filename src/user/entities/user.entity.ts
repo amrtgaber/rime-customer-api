@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ApiKey, User } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 
-import { UserEntity } from 'src/user/entities/user.entity';
+import { ApikeyEntity } from 'src/apikey/entities/apikey.entity';
 
-export class ApikeyEntity implements ApiKey {
+export class UserEntity implements User {
   @Exclude()
   id: number;
 
@@ -14,19 +14,13 @@ export class ApikeyEntity implements ApiKey {
   @ApiProperty()
   updatedAt: Date;
 
-  @Exclude()
-  hash: string;
-
   @ApiProperty()
-  apikey: string;
+  username: string;
 
-  @ApiProperty({ type: UserEntity })
-  user: User;
+  @ApiProperty({ type: ApikeyEntity })
+  apikey: ApiKey;
 
-  @Exclude()
-  userId: number;
-
-  constructor(partial: Partial<ApikeyEntity>) {
+  constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);
   }
 }

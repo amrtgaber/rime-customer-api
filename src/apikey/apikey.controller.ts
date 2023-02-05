@@ -8,7 +8,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { createApiPropertyDecorator } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 
 import { ApikeyService } from './apikey.service';
 import { CreateApikeyDto } from './dto/create-apikey.dto';

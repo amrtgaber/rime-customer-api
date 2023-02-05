@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ApikeyModule } from './apikey/apikey.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ApikeyModule } from './apikey/apikey.module';
     AuthModule,
     PrismaModule,
     ApikeyModule,
+    UserModule,
   ],
 })
 export class AppModule {}
