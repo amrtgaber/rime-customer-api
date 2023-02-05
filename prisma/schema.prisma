@@ -17,6 +17,8 @@ model User {
 
   username String @unique
 
+  apikey ApiKey?
+
   @@map("users")
 }
 
@@ -26,6 +28,9 @@ model ApiKey {
   updatedAt DateTime @updatedAt
 
   hash String
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
 
   @@map("apikeys")
 }

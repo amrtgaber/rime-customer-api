@@ -15,24 +15,38 @@ export class ApikeyService {
     private config: ConfigService,
   ) {}
 
-  generateApiKey() {
-    return this.jwt.signAsync('', {
-      expiresIn: '15m',
-      secret: this.config.get('JWT_SECRET'),
-    });
-  }
-
   async create(createApikeyDto: CreateApikeyDto) {
-    const generatedApikey = await this.generateApiKey();
+    const { userId, username } = createApikeyDto;
+    const generatedApikey = await this.generateApiKey(userId, username);
     const hash = await argon.hash(generatedApikey);
 
-    const apikey = await this.prisma.apiKey.create({ data: { hash } });
+    const apikey = await this.prisma.apiKey.create({
+      data: {
+        hash,
+        user: {
+          connect: { id: userId },
+        },
+      },
+    });
 
     return {
       apikey: generatedApikey,
       createdAt: apikey.createdAt,
       updatedAt: apikey.updatedAt,
     };
+  }
+
+  generateApiKey(userId: number, username: string): Promise<string> {
+    const payload = {
+      sub: userId,
+      username,
+      createdAt: new Date(),
+    };
+
+    return this.jwt.signAsync(payload, {
+      expiresIn: '15m',
+      secret: this.config.get('JWT_SECRET'),
+    });
   }
 
   findAll() {
